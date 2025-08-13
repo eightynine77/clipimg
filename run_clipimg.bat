@@ -1,2 +1,3 @@
 @echo off
-powershell -WindowStyle Hidden -Command "Start-Process 'pwsh' -ArgumentList '-NoExit','-File','tray.ps1' -WindowStyle Hidden"
+
+powershell -WindowStyle Hidden -Command "Start-Process 'powershell' -ArgumentList '-NoExit','-File','tray.ps1' -WindowStyle Hidden"
