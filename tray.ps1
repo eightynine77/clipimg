@@ -4,7 +4,7 @@ Add-Type -AssemblyName System.Drawing
 
 # ----- CONFIG -----
 $batchPath = Join-Path $PSScriptRoot '\clipimg-mspaint-version\run.bat'   # adjust if needed
-$iconFile  = Join-Path $PSScriptRoot 'icon.ico'          # optional
+$iconFile  = Join-Path $PSScriptRoot '\icon.ico'          # optional
 # ------------------
 
 if (-not (Test-Path $batchPath)) {
@@ -84,4 +84,5 @@ Register-ObjectEvent -InputObject ([System.AppDomain]::CurrentDomain) -EventName
 
 # Visual styles + run loop
 [System.Windows.Forms.Application]::EnableVisualStyles()
+
 [System.Windows.Forms.Application]::Run()
