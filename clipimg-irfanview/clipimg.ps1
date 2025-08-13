@@ -12,7 +12,7 @@ try {
             $IrfanPath = $commonPaths | Where-Object { Test-Path $_ } | Select-Object -First 1
         }
         if (-not $IrfanPath) {
-            throw "IrfanView executable not found. Set the IRFANVIEW_PATH environment variable or edit this script to add the correct path."
+            throw "IrfanView not found. Set the IRFANVIEW_PATH environment variable or edit this script to add the correct path. you can download Irfanview here: https://www.irfanview.com/main_download_engl.htm"
         }
         
         Add-Type -AssemblyName System.Windows.Forms
@@ -49,4 +49,5 @@ try {
 } finally {
     Write-Host "`nPress ENTER to close this window..." -ForegroundColor Yellow
     Read-Host | Out-Null
+
 }
