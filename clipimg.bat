@@ -36,7 +36,7 @@ IF EXIST "%appdata%\Microsoft\Windows\Start Menu\Programs\Startup\clipimg.lnk" (
   echo loading...
 echo.
   powershell.exe -ExecutionPolicy Bypass -Command "$scriptPath = Join-Path '%~dp0' 'tray.ps1'; $wshShell = New-Object -ComObject WScript.Shell; $shortcutPath = Join-Path $env:APPDATA 'Microsoft\Windows\Start Menu\Programs\Startup\clipimg.lnk'; $shortcut = $wshShell.CreateShortcut($shortcutPath); $shortcut.TargetPath = 'powershell.exe'; $shortcut.Arguments = \"-WindowStyle Hidden -ExecutionPolicy Bypass -File `\"`\"$scriptPath`\"`\" \"; $shortcut.WorkingDirectory = '%~dp0'; $shortcut.Save()"
-echo windows startup shortcut created!
+echo windows startup shortcut is created!
 echo.
 echo now clipimg can run on startup.
 echo.
