@@ -17,7 +17,15 @@ goto home
 :runclipimg
 echo.
 echo.
-start powershell -Command "write-host loading...; Start-Process 'powershell' -ArgumentList '-NoExit','-File','tray.ps1' -WindowStyle Hidden; write-host ''; write-host 'clipimg is now running.';write-host 'press any key to close this window...'; $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')"
+echo starting clipimg...
+echo.
+echo please wait.
+for /f %%A in ('powershell -NoProfile -Command "Start-Process 'powershell' -ArgumentList '-NoExit','-File','tray.ps1' -WindowStyle Hidden"') do rem
+echo.
+echo.
+echo.
+echo clipimg is now running.
+echo.
 echo press any key to go back...
 pause >nul
 goto home
