@@ -1,15 +1,28 @@
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 
-$batchPath = Join-Path $PSScriptRoot '\clipimg-mspaint-version\run.bat'   
+$batchPath = Join-Path $PSScriptRoot '\components\run.bat'   
+$irfanViewBatch = join-Path $PSScriptRoot '\components\run-irfanview.bat'
 $iconFile  = Join-Path $PSScriptRoot '\icon.ico' 
 
 if (-not (Test-Path $batchPath)) {
     Write-host "Batch file not found: $batchPath" -foreground red
+    Write-host ""
+    Write-host "press any key to close this script..."
+    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+    exit 1
+}
+
+if (-not (Test-Path $irfanViewBatch)) {
+    Write-host "Batch file not found: $irfanViewBatch" -foreground red
+    Write-host ""
+    Write-host "press any key to close this script..."
+    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
     exit 1
 }
 
 $escapedPath = $batchPath -replace "'", "''"
+$escapedPath_irfanView = $irfanViewBatch -replace "'", "''"
 
 $notify = New-Object System.Windows.Forms.NotifyIcon
 try {
@@ -36,16 +49,25 @@ Start-Job -ArgumentList '$escapedPath' -ScriptBlock {
 $itemCommand = New-Object System.Windows.Forms.ToolStripMenuItem("view clipboard image")
 $itemCommand.add_Click([ScriptBlock]::Create($cmdScriptText))
 
+$viewWithIfrfanView = @"
+param(`$sender, `$e)
+Start-Job -ArgumentList '$escapedPath_irfanView' -ScriptBlock {
+    param(`$bp)
+    Start-Process -FilePath `$bp -WorkingDirectory (Split-Path `$bp)
+} | Out-Null
+"@
+$itemCommand_irfanView = New-Object System.Windows.Forms.ToolStripMenuItem("view clipboard image (irfanview)")
+$itemCommand_irfanView.add_Click([ScriptBlock]::Create($viewWithIfrfanView))
+
 $exitScriptText = @"
 param(`$sender, `$e)
-[System.Windows.Forms.Application]::Exit()
 taskkill /f /im powershell.exe
-taskkill /f /im pwsh.exe
 "@
 $itemExit = New-Object System.Windows.Forms.ToolStripMenuItem("Exit")
 $itemExit.add_Click([ScriptBlock]::Create($exitScriptText))
 
 $cms.Items.Add($itemCommand) | Out-Null
+$cms.Items.Add($itemCommand_irfanView) | Out-Null
 $cms.Items.Add($itemExit)    | Out-Null
 
 $notify.ContextMenuStrip = $cms
