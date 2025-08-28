@@ -6,11 +6,13 @@ echo ===============================
 echo  clipimg - created by jebbidan
 echo ===============================
 echo press [1] key to start clipimg
-echo press [2] key to enable clipimg at startup
-echo press [3] key to exit
-CHOICE /C 123 /N /M ">"
-if errorlevel 3 exit
-if errorlevel 2 goto startup
+echo press [2] key to stop clipimg
+echo press [3] key to enable clipimg at startup
+echo press [4] key to exit
+CHOICE /C 1234 /N /M ">"
+if errorlevel 4 exit
+if errorlevel 3 goto startup
+if errorlevel 2 goto kill_clipimg 
 if errorlevel 1 goto runclipimg
 goto home
 
@@ -25,6 +27,16 @@ echo.
 echo.
 echo.
 echo clipimg is now running.
+echo.
+echo press any key to go back...
+pause >nul
+goto home
+
+:kill_clipimg
+echo.
+echo.
+taskkill /f /im powershell.exe >nul
+echo clipimg is now stopped running
 echo.
 echo press any key to go back...
 pause >nul
