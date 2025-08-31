@@ -22,7 +22,7 @@ if "%OUT%"=="" (
 
 set "IMGPATH=%OUT%"
 
-set files="%ProgramFiles(x86)%\IrfanView\i_view32.exe" "%ProgramFiles%\IrfanView\i_view32.exe" "%ProgramFiles(x86)%\IrfanView\i_view64.exe" "%ProgramFiles%\IrfanView\i_view64.exe" "d:\program files\irfanview\i_view64.exe"
+set files="%ProgramFiles(x86)%\IrfanView\i_view32.exe" "%ProgramFiles%\IrfanView\i_view32.exe" "%ProgramFiles(x86)%\IrfanView\i_view64.exe" "%ProgramFiles%\IrfanView\i_view64.exe"
 ::==============================================
 rem add your new line of custom irfanview installation directory above.
 
@@ -68,4 +68,5 @@ exit /b 1
 start "" "%IV%" "%IMGPATH%"
 timeout /t 1 /nobreak >nul
 del "%IMGPATH%" 
+
 exit /b 0
