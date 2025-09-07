@@ -8,9 +8,11 @@ echo ===============================
 echo press [1] key to start clipimg
 echo press [2] key to stop clipimg
 echo press [3] key to enable clipimg at startup
-echo press [4] key to exit
-CHOICE /C 1234 /N /M ">"
-if errorlevel 4 exit
+echo press [4] key to disable clipimg at startup
+echo press [5] key to exit
+CHOICE /C 12345 /N /M ">"
+if errorlevel 5 exit
+if errorlevel 4 goto disable_startup
 if errorlevel 3 goto startup
 if errorlevel 2 goto kill_clipimg 
 if errorlevel 1 goto runclipimg
@@ -55,10 +57,32 @@ IF EXIST "%appdata%\Microsoft\Windows\Start Menu\Programs\Startup\clipimg.lnk" (
   cls
   echo loading...
 echo.
-  powershell.exe -ExecutionPolicy Bypass -Command "$scriptPath = Join-Path '%~dp0' 'tray.ps1'; $wshShell = New-Object -ComObject WScript.Shell; $shortcutPath = Join-Path $env:APPDATA 'Microsoft\Windows\Start Menu\Programs\Startup\clipimg.lnk'; $shortcut = $wshShell.CreateShortcut($shortcutPath); $shortcut.TargetPath = 'powershell.exe'; $shortcut.Arguments = \"-WindowStyle Hidden -ExecutionPolicy Bypass -File `\"`\"$scriptPath`\"`\" \"; $shortcut.WorkingDirectory = '%~dp0'; $shortcut.Save()"
+powershell.exe -ExecutionPolicy Bypass -Command "$scriptPath = Join-Path '%~dp0' 'tray.ps1'; $wshShell = New-Object -ComObject WScript.Shell; $shortcutPath = Join-Path $env:APPDATA 'Microsoft\Windows\Start Menu\Programs\Startup\clipimg.lnk'; $shortcut = $wshShell.CreateShortcut($shortcutPath); $shortcut.TargetPath = 'powershell.exe'; $shortcut.Arguments = \"-WindowStyle Hidden -ExecutionPolicy Bypass -File \"\"$scriptPath\"\" \"; $shortcut.WorkingDirectory = '%~dp0'; $shortcut.Save()"
 echo windows startup shortcut is created!
 echo.
 echo now clipimg can run on startup.
+echo.
+echo.
+echo.
+echo press any key to clear this message...
+pause >nul
+goto home
+)
+
+:disable_startup
+echo.
+echo.
+IF EXIST "%appdata%\Microsoft\Windows\Start Menu\Programs\Startup\clipimg.lnk" (
+del "%appdata%\Microsoft\Windows\Start Menu\Programs\Startup\clipimg.lnk"
+echo clipimg is now disabled on startup. which means clipimg won't run at startup.
+echo.
+echo.
+echo.
+echo press any key to clear this message...
+pause >nul
+goto home
+) ELSE (
+echo you haven't set clipimg to run at startup.
 echo.
 echo.
 echo.
