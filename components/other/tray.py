@@ -2,8 +2,9 @@
 tray_clipboard_viewer.py
 
 Pure-Python tray icon for launching batch files.
-Requires: pystray, pillow
-pip install pystray pillow
+Required pip packages: 
+-pystray
+-pillow
 """
 
 import os
