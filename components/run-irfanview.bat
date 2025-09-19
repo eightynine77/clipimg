@@ -1,5 +1,6 @@
 @echo off
 setlocal enabledelayedexpansion
+set "textcolor=text\gecho.exe"
 set "OUT="
 
 for /f "usebackq delims=" %%p in (`"paste_image.exe" 2^>^&1`) do set "OUT=%%p"
@@ -22,7 +23,7 @@ if "%OUT%"=="" (
 
 set "IMGPATH=%OUT%"
 
-set files="%ProgramFiles(x86)%\IrfanView\i_view32.exe" "%ProgramFiles%\IrfanView\i_view32.exe" "%ProgramFiles(x86)%\IrfanView\i_view64.exe" "%ProgramFiles%\IrfanView\i_view64.exe"
+set files="%ProgramFiles(x86)%\IrfanView\i_view32.exe" "%ProgramFiles%\IrfanView\i_view32.exe" "%ProgramFiles(x86)%\IrfanView\i_view64.exe" "%ProgramFiles%\IrfanView\i_view64.exe" "d:\program files\irfanview\i_view64.exe"
 ::==============================================
 rem add your new line of custom irfanview installation directory above.
 
@@ -45,19 +46,19 @@ for %%F in (%files%) do (
 )
 
 :missingfiles
-text\gecho "<red>ERROR: irfanview installation is not detected."
+%textcolor% "<red>ERROR: irfanview installation is not detected."
 echo.
 echo.
 echo either you have not installed irfanview yet or you installed it in a custom path/folder
 echo.
-text\gecho "<yellow>You can download IrfanView here:"
-text\gecho "<cyan>https://www.irfanview.com/main_download_engl.htm"
+%textcolor% "<yellow>You can download IrfanView here:"
+%textcolor% "<cyan>https://www.irfanview.com/main_download_engl.htm"
 echo.
 echo.
 echo if it's the latter then you can modify this batch script by adding a new if else in the  
 echo section of this batch file (%~nx0) that has this:
 echo ::==============================================
-text\gecho "<green>this batch file's path location: %~dp0%~nx0"
+%textcolor% "<green>this batch file's path location: %~dp0%~nx0"
 echo.
 echo.
 echo press any key to close this script...
@@ -68,5 +69,4 @@ exit /b 1
 start "" "%IV%" "%IMGPATH%"
 timeout /t 1 /nobreak >nul
 del "%IMGPATH%" 
-
 exit /b 0
