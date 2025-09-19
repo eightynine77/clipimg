@@ -1,20 +1,19 @@
 @echo off
+set colort=components\text\gecho.exe
 :home
 cls
 title clipimg
 echo ===============================
 echo  clipimg - created by jebbidan
 echo ===============================
-echo press [1] key to start clipimg
-echo press [2] key to stop clipimg
-echo press [3] key to enable clipimg at startup
-echo press [4] key to disable clipimg at startup
-echo press [5] key to exit
+%colort% "press [1] key to <cyan>start</> clipimg"
+%colort% "press [2] key to <yellow>enable</> clipimg at startup"
+%colort% "press [3] key to <red>disable</> clipimg at startup"
+%colort% "press [4] key to exit"
 CHOICE /C 12345 /N /M ">"
-if errorlevel 5 exit
-if errorlevel 4 goto disable_startup
-if errorlevel 3 goto startup
-if errorlevel 2 goto kill_clipimg 
+if errorlevel 4 exit
+if errorlevel 3 goto disable_startup
+if errorlevel 2 goto startup
 if errorlevel 1 goto runclipimg
 goto home
 
@@ -24,21 +23,11 @@ echo.
 echo starting clipimg...
 echo.
 echo please wait.
-for /f %%A in ('powershell -NoProfile -Command "Start-Process 'powershell' -ArgumentList '-NoExit','-File','tray.ps1' -WindowStyle Hidden"') do rem
+start components\tray.exe
 echo.
 echo.
 echo.
 echo clipimg is now running.
-echo.
-echo press any key to go back...
-pause >nul
-goto home
-
-:kill_clipimg
-echo.
-echo.
-taskkill /f /im powershell.exe >nul
-echo clipimg is now stopped running
 echo.
 echo press any key to go back...
 pause >nul
@@ -57,7 +46,7 @@ IF EXIST "%appdata%\Microsoft\Windows\Start Menu\Programs\Startup\clipimg.lnk" (
   cls
   echo loading...
 echo.
-powershell.exe -ExecutionPolicy Bypass -Command "$scriptPath = Join-Path '%~dp0' 'tray.ps1'; $wshShell = New-Object -ComObject WScript.Shell; $shortcutPath = Join-Path $env:APPDATA 'Microsoft\Windows\Start Menu\Programs\Startup\clipimg.lnk'; $shortcut = $wshShell.CreateShortcut($shortcutPath); $shortcut.TargetPath = 'powershell.exe'; $shortcut.Arguments = \"-WindowStyle Hidden -ExecutionPolicy Bypass -File \"\"$scriptPath\"\" \"; $shortcut.WorkingDirectory = '%~dp0'; $shortcut.Save()"
+powershell.exe -ExecutionPolicy Bypass -Command "$exePath = Join-Path '%~dp0components' 'tray.exe'; $wsh = New-Object -ComObject WScript.Shell; $shortcutPath = Join-Path $env:APPDATA 'Microsoft\Windows\Start Menu\Programs\Startup\clipimg.lnk'; $shortcut = $wsh.CreateShortcut($shortcutPath); $shortcut.TargetPath = $exePath; $shortcut.WorkingDirectory = '%~dp0'; $shortcut.Save()"
 echo windows startup shortcut is created!
 echo.
 echo now clipimg can run on startup.
