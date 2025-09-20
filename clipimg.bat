@@ -6,10 +6,10 @@ title clipimg
 echo ===============================
 echo  clipimg - created by jebbidan
 echo ===============================
-%colort% "press <green>[1]</> key to <cyan>start</> clipimg"
-%colort% "press <green>[2]</> key to <yellow>enable</> clipimg at startup"
-%colort% "press <green>[3]</> key to <red>disable</> clipimg at startup"
-%colort% "press <green>[4]</> key to exit"
+%colort% "press <green>[1]</> number key to <cyan>start</> clipimg"
+%colort% "press <green>[2]</> number key to <yellow>enable</> clipimg at startup"
+%colort% "press <green>[3]</> number key to <red>disable</> clipimg at startup"
+%colort% "press <green>[4]</> number key to exit"
 CHOICE /C 12345 /N /M ">"
 if errorlevel 4 exit
 if errorlevel 3 goto disable_startup
