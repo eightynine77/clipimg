@@ -1,0 +1,8 @@
+you can indeed use this python script to launch the tray icon. 
+
+however, you must install two python pip packages in order for the script to work.
+those two pip packages are:
+-pystray
+-pillow
+
+you also need python installed, so there's that
