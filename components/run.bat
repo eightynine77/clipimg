@@ -21,6 +21,6 @@ pause >nul
 
 set "IMGPATH=%OUT%"
 start "" "%IMGPATH%"
-timeout /t 1 /nobreak >nul
+timeout /t 3 /nobreak >nul
 del "%IMGPATH%"
 exit /b 0
